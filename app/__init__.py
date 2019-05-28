@@ -1,4 +1,3 @@
-from app import routes, models
 from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -13,3 +12,5 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
 toolbar = DebugToolbarExtension(app)
+
+from app import routes, models
