@@ -1,0 +1,43 @@
+.tasks {
+    display: flex;
+    justify-content: space-around;
+}
+.tasks h3 {
+    text-align: center;
+}
+.todo-form{
+    text-align: center;
+}
+.header a {
+    text-decoration: none;
+    font-size: 18px;    
+}
+
+.tasks li {
+    list-style: none;
+    margin: 10px;
+}
+
+.tasks li a:hover {
+    text-decoration: none;
+}
+
+.button {
+    background-color: #EEEEEE;
+    padding: 3px 6px;
+    margin: 5px;
+    text-decoration:none;
+    font-weight:bold;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.danger {
+    background-color:#FF0040;
+    color: #FFFFFF;
+}
+
+.danger:hover {
+    background-color:#EB003B;
+    color: #FFFFFF;
+}
