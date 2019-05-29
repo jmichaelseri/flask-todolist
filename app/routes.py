@@ -12,17 +12,15 @@ from flask_login import current_user, login_user, logout_user, login_required
 @app.route('/index', methods=('GET', 'POST'))
 @login_required
 def index():
-    incomplete_tasks = Task.query.filter_by(completed=False).all()
-    completed_tasks = Task.query.filter_by(completed=True).all()
+    itasks = Task.query.filter_by(completed=False).all()
+    ctasks = Task.query.filter_by(completed=True).all()
     form = TaskFrom()
     if form.validate_on_submit():
-        task = Task(body=form.task.data)
+        task = Task(body=form.task.data, author=current_user)
         db.session.add(task)
         db.session.commit()
         return redirect(url_for('index'))
-    return render_template('index.html', title='Home', form=form,
-                           incomplete_tasks=incomplete_tasks,
-                           completed_tasks=completed_tasks)
+    return render_template('index.html', title='Home', form=form, itasks=itasks, ctasks=ctasks)
 
 
 # logging into the application
@@ -81,3 +79,4 @@ def delete(id):
     db.session.delete(task)
     db.session.commit()
     return redirect(url_for('index'))
+

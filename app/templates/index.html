@@ -19,24 +19,28 @@
     <div class="incomplete">
         <h3>Incomplete Tasks</h3>
         <ul>
-            {% for task in incomplete_tasks %}
-            <li>
-                {{ task.body|capitalize }}
-                <a class="button" href="{{url_for('complete', id=task.id)}}">Done</a>
-                <a class="button danger" href="{{url_for('delete', id=task.id)}}">Delete</a>
-            </li>
+            {% for task in itasks %}
+                {% if task.author.username == current_user.username %}
+                    <li>
+                        {{ task.body|capitalize }}
+                        <a class="button" href="{{url_for('complete', id=task.id)}}">Done</a>
+                        <a class="button danger" href="{{url_for('delete', id=task.id)}}">Delete</a>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>
     <div class="completed">
         <h3>Completed Tasks</h3>
         <ul>
-            {% for task in completed_tasks %}
-            <li>
-                {{ task.body|capitalize }} {{ task.timestamp.strftime('%Y-%m-%d') }}
-                <a class="button" href="{{url_for('complete', id=task.id)}}">Reset</a>
-                <a class="button danger" href="{{url_for('delete', id=task.id)}}">Delete</a>
-            </li>
+            {% for task in ctasks %}
+                {% if task.author.username == current_user.username %}
+                    <li>
+                        {{ task.body|capitalize }}
+                        <a class="button" href="{{url_for('complete', id=task.id)}}">Done</a>
+                        <a class="button danger" href="{{url_for('delete', id=task.id)}}">Delete</a>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>

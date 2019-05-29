@@ -2,7 +2,7 @@ from app import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from app import login
+from app import login_manager
 
 
 class User(UserMixin, db.Model):
@@ -21,6 +21,11 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+# class TaskList(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     title = db.column(db.String(100))
+#     tasks = db.relationship('Task', backref='tasklist', lazy='dynamic')
+
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,11 +33,12 @@ class Task(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     completed = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # tasklist_id = db.Column(db.Integer, db.ForeignKey('tasklist.id'))
 
     def __repr__(self):
         return '<Task {}>'.format(self.body)
 
 
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
