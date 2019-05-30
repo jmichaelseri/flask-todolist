@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="todo-form">
-    <h1>Flask Todo</h1>
+    <h1 class="title">Flask Todo</h1>
     <h3>Hello, {{ current_user.username|capitalize }}! What do you want to do today?</h3>
     <form action="" method="POST">
         {{ form.hidden_tag() }}
@@ -22,10 +22,9 @@
             {% for task in itasks %}
                 {% if task.author.username == current_user.username %}
                     <li>
-                        
-                        <a class="button update" href="{{url_for('update', id=task.id)}}">{{ task.body|capitalize }}</a>
+                        {{ task.body|capitalize }}
+                        <a class="button update" href="{{url_for('update', id=task.id)}}">Edit</a>
                         <a class="button" href="{{url_for('complete', id=task.id)}}">Done</a>
-                        <a class="button danger" href="{{url_for('delete', id=task.id)}}">Delete</a>
                     </li>
                 {% endif %}
             {% endfor %}
@@ -38,8 +37,7 @@
                 {% if task.author.username == current_user.username %}
                     <li>
                         {{ task.body|capitalize }}
-                        <a class="button" href="{{url_for('complete', id=task.id)}}">Done</a>
-                        <a class="button danger" href="{{url_for('delete', id=task.id)}}">Delete</a>
+                        <a class="button danger" href="{{url_for('delete', id=task.id)}}">Del</a>
                     </li>
                 {% endif %}
             {% endfor %}

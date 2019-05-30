@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, request, flash, request
 from app import app, db
-from app.forms import LoginForm, TaskFrom, RegistrationForm, EditTaskFrom
+from app.forms import LoginForm, TaskFrom, RegistrationForm
 from werkzeug.urls import url_parse
 from app.models import User, Task
 
@@ -81,14 +81,14 @@ def delete(id):
     return redirect(url_for('index'))
 
 # Update a todo
-@app.route('/update/<int:id>', methods=('GET', 'POST'))
+@app.route('/update/<string:id>', methods=('GET', 'POST'))
 def update(id):
-    task = Task.query.get(int(id))
-    form = EditTaskFrom()
+    task = Task.query.get(id)
+    form = TaskFrom()
     if form.validate_on_submit():
-        form.populate_obj(task)
+        task.body = form.task.data
         db.session.commit()
-        flash('Task successfully edited')
+        flash('Task updated!')
         return redirect(url_for('index'))
-    return render_template('update.html', form=form)
+    return render_template('update.html', form=form, task=task)
 

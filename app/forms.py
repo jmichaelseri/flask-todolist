@@ -17,11 +17,6 @@ class TaskFrom(FlaskForm):
     submit = SubmitField('Add Todo')
 
 
-class EditTaskFrom(FlaskForm):
-    task = StringField('Task', validators=[DataRequired()])
-    submit = SubmitField('Edit Task')
-
-
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
