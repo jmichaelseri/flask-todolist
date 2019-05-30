@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="todo-form">
+    <h1>Flask Todo</h1>
+    <h3>Hello, {{ current_user.username|capitalize }}! What task do you want to update?</h3>
+    <form action="">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.task(size=32, placeholder='Enter your todo') }} <br>
+            {% for error in form.task.errors %}
+            <span style="color:red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(class="btn btn-primary", value="Update your todo") }}</p>
+    </form>
+</div>
+{% endblock content %}

@@ -21,11 +21,6 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-# class TaskList(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     title = db.column(db.String(100))
-#     tasks = db.relationship('Task', backref='tasklist', lazy='dynamic')
-
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,7 +28,6 @@ class Task(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     completed = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    # tasklist_id = db.Column(db.Integer, db.ForeignKey('tasklist.id'))
 
     def __repr__(self):
         return '<Task {}>'.format(self.body)

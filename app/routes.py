@@ -1,13 +1,13 @@
 from flask import render_template, redirect, url_for, request, flash, request
 from app import app, db
-from app.forms import LoginForm, TaskFrom, RegistrationForm
+from app.forms import LoginForm, TaskFrom, RegistrationForm, EditTaskFrom
 from werkzeug.urls import url_parse
 from app.models import User, Task
 
 from flask_login import current_user, login_user, logout_user, login_required
 
 
-# List of all incomplete tasks
+# Lists of incomplete and completed tasks
 @app.route('/', methods=('GET', 'POST'))
 @app.route('/index', methods=('GET', 'POST'))
 @login_required
@@ -79,4 +79,16 @@ def delete(id):
     db.session.delete(task)
     db.session.commit()
     return redirect(url_for('index'))
+
+# Update a todo
+@app.route('/update/<int:id>', methods=('GET', 'POST'))
+def update(id):
+    task = Task.query.get(int(id))
+    form = EditTaskFrom()
+    if form.validate_on_submit():
+        form.populate_obj(task)
+        db.session.commit()
+        flash('Task successfully edited')
+        return redirect(url_for('index'))
+    return render_template('update.html', form=form)
 

@@ -22,7 +22,8 @@
             {% for task in itasks %}
                 {% if task.author.username == current_user.username %}
                     <li>
-                        {{ task.body|capitalize }}
+                        
+                        <a class="button update" href="{{url_for('update', id=task.id)}}">{{ task.body|capitalize }}</a>
                         <a class="button" href="{{url_for('complete', id=task.id)}}">Done</a>
                         <a class="button danger" href="{{url_for('delete', id=task.id)}}">Delete</a>
                     </li>

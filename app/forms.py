@@ -14,7 +14,12 @@ class LoginForm(FlaskForm):
 class TaskFrom(FlaskForm):
     task = StringField('Task', validators=[DataRequired()])
     completed = BooleanField()
-    submit = SubmitField('Submit')
+    submit = SubmitField('Add Todo')
+
+
+class EditTaskFrom(FlaskForm):
+    task = StringField('Task', validators=[DataRequired()])
+    submit = SubmitField('Edit Task')
 
 
 class RegistrationForm(FlaskForm):
@@ -34,4 +39,4 @@ class RegistrationForm(FlaskForm):
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('Pleas use a different email address.')
+            raise ValidationError('Please use a different email address.')

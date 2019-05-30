@@ -37,6 +37,11 @@
     color: #FFFFFF;
 }
 
+.update {
+    background-color: chocolate;
+    color: #FFFFFF;
+}
+
 .danger:hover {
     background-color:#EB003B;
     color: #FFFFFF;
