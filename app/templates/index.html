@@ -1,47 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="todo-form">
-    <h1 class="title">Flask Todo</h1>
-    <h3>Hello, {{ current_user.username|capitalize }}! What do you want to do today?</h3>
+<div class="container">
+    <h1 class="display-4">Flask Todo</h1>
+    <p class="lead">Hello, {{ current_user.username|capitalize }}! What do you want to do today?</p>
     <form action="" method="POST">
         {{ form.hidden_tag() }}
-        <p>
+        <div class="form-group">
             {{ form.task(size=32, placeholder='Enter your todo') }} <br>
             {% for error in form.task.errors %}
             <span style="color:red;">[{{ error }}]</span>
             {% endfor %}
-        </p>
+        </div>
         <p>{{ form.submit(class="btn btn-primary", value="Add a Todo") }}</p>
     </form>
 </div>
-<div class="tasks container-fluid">
-    <div class="incomplete">
-        <h3>Incomplete Tasks</h3>
-        <ul>
+
+<div class="container">
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Task Id</th>
+                <th scope="col">Task</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Complete</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for task in itasks %}
-                {% if task.author.username == current_user.username %}
-                    <li>
-                        {{ task.body|capitalize }}
-                        <a class="button update" href="{{url_for('update', id=task.id)}}">Edit</a>
-                        <a class="button" href="{{url_for('complete', id=task.id)}}">Done</a>
-                    </li>
-                {% endif %}
+            {% if task.author.username == current_user.username %}
+            <tr>
+                <th scope="row">{{ task.id }}</th>
+                <td>{{ task.body|capitalize }}</td>
+                <td><a class="btn btn-success" href="{{url_for('update', id=task.id)}}">Edit</a></td>
+                <td><a class="btn btn-danger" href="{{url_for('complete', id=task.id)}}">Done</a></td>
+            </tr>
+            {% endif %}
             {% endfor %}
-        </ul>
-    </div>
-    <div class="completed">
-        <h3>Completed Tasks</h3>
-        <ul>
-            {% for task in ctasks %}
-                {% if task.author.username == current_user.username %}
-                    <li>
-                        {{ task.body|capitalize }}
-                        <a class="button danger" href="{{url_for('delete', id=task.id)}}">Del</a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
+        </tbody>
+    </table
 </div>
 {% endblock content %}

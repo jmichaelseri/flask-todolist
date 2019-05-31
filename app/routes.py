@@ -7,20 +7,26 @@ from app.models import User, Task
 from flask_login import current_user, login_user, logout_user, login_required
 
 
-# Lists of incomplete and completed tasks
+# Lists of incomplete tasks
 @app.route('/', methods=('GET', 'POST'))
 @app.route('/index', methods=('GET', 'POST'))
 @login_required
 def index():
     itasks = Task.query.filter_by(completed=False).all()
-    ctasks = Task.query.filter_by(completed=True).all()
     form = TaskFrom()
     if form.validate_on_submit():
         task = Task(body=form.task.data, author=current_user)
         db.session.add(task)
         db.session.commit()
         return redirect(url_for('index'))
-    return render_template('index.html', title='Home', form=form, itasks=itasks, ctasks=ctasks)
+    return render_template('index.html', title='Home', form=form, itasks=itasks)
+
+# list of completed tasks and other informations
+@app.route('/completed/tasks')
+@login_required
+def completed_tasks():
+    ctasks = Task.query.filter_by(completed=True).all()
+    return render_template('/completed.html', title='Completed Tasks', ctasks=ctasks )
 
 
 # logging into the application
@@ -78,7 +84,7 @@ def delete(id):
     task = Task.query.get(int(id))
     db.session.delete(task)
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('completed_tasks'))
 
 # Update a todo
 @app.route('/update/<string:id>', methods=('GET', 'POST'))

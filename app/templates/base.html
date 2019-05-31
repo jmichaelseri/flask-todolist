@@ -29,6 +29,7 @@
                     <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
                     {% else %}
                     <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    <a class="nav-item nav-link" href="{{ url_for('completed_tasks') }}">Dashboard</a>
                     {% endif %}
                 </div>
             </div>
@@ -44,7 +45,7 @@
             {% endif %}
             {% endwith %}
         </div>
-        <div class="container-fluid">
+        <div class="container">
             {% block content %}{% endblock content %}
         </div>
     </div>
