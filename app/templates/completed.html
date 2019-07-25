@@ -2,16 +2,14 @@
 
 {% block content %}
 <table class="table table-hover">
-    <caption>List of completed tasks</caption>
     <thead>
         <tr>
-            <th>{{ current_user.username|capitalize }} - Dashboard</th>
+            <th>{{ current_user.username|capitalize }} - List of completed tasks</th>
         </tr>
         <tr>
             <th scope="col">Task ID</th>
             <th scope="col">Task</th>
             <th scope="col">Date</th>
-            <th scope="col">Due date</th>
             <th scope="col">Delete</th>
         </tr>
     </thead>
@@ -22,7 +20,6 @@
                     <th scope="row">{{ task.id }}</th>
                     <td>{{ task.body|capitalize }}</td>
                     <td>{{ task.timestamp.strftime("%Y-%m-%d") }}</td>
-                    <td>Due date...</td>
                     <td><a class="btn btn-danger" href="{{ url_for('delete', id=task.id) }}">Delete</a></td>
                 </tr>
             {% endif %}

@@ -33,6 +33,6 @@ The command line prompt will then look like
 
 * Finally install the requirements
 ```
-pip install
+pip install -r requirements.txt
 ```
 
